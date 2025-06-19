@@ -1,0 +1,6 @@
+@CarbonNow_HostAddress = http://localhost:5225
+
+GET {{CarbonNow_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
