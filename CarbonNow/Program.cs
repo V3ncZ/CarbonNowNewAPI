@@ -1,4 +1,4 @@
-using CarbonNow.Controllers;
+using CarbonNow.Routes;
 using CarbonNow.Data;
 using CarbonNow.Model;
 using CarbonNow.Services;
@@ -23,6 +23,7 @@ builder.Services.AddScoped<DAL<ElectricalItem>>();
 var app = builder.Build();
 
 app.UserRoutes();
+app.TransportRoutes();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

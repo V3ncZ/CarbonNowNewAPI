@@ -2,6 +2,16 @@
 {
     public class Transport
     {
+        public Transport(User idUsuario, string tipoTransporte, int distanciaKm, DateTime dtUso, int emissaoCalculada, bool conformeIso)
+        {
+            IdUsuario = idUsuario;
+            TipoTransporte = tipoTransporte;
+            DistanciaKm = distanciaKm;
+            DtUso = dtUso;
+            EmissaoCalculada = emissaoCalculada;
+            ConformeIso = conformeIso;
+        }
+
         public int Id { get; set; }
         public User? IdUsuario { get; set; }
         public string? TipoTransporte { get; set; }

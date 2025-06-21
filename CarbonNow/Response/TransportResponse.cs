@@ -1,8 +1,9 @@
 ﻿using CarbonNow.Model;
 
-namespace CarbonNow.Request
+namespace CarbonNow.Response
 {
-    public record TransportRequest(
+    public class TransportResponse(
+        int id, 
         User idUsuario,
         string tipoTransporte,
         int distanciaKm,

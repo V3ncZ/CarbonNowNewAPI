@@ -4,7 +4,7 @@ using CarbonNow.Response;
 using CarbonNow.Services;
 using Microsoft.AspNetCore.Mvc;
 
-namespace CarbonNow.Controllers
+namespace CarbonNow.Routes
 {
     public static class UserRoute
     {
@@ -35,7 +35,7 @@ namespace CarbonNow.Controllers
                 return Results.Ok(user);
             });
 
-            route.MapDelete("/Delete", ([FromServices] DAL<User> dal, int id) =>
+            route.MapDelete("/Delete/{id}", ([FromServices] DAL<User> dal, int id) =>
             {
                 var user = dal.RecuperarPor(a => a.Id == id);
                 if(user is null)
@@ -46,9 +46,9 @@ namespace CarbonNow.Controllers
                 return Results.Ok();
             });
 
-            route.MapPut("/Update", ([FromBody] UserRequestEdit userEdit, [FromServices] DAL<User> dal) =>
+            route.MapPut("/Update/{id}", ([FromBody] UserRequestEdit userEdit, [FromServices] DAL<User> dal, int id) =>
             {
-                var user = dal.RecuperarPor(a => a.Id == userEdit.id);
+                var user = dal.RecuperarPor(a => a.Id == id);
                 if (user is null)
                 {
                     return Results.NotFound();
