@@ -16,15 +16,15 @@ namespace CarbonNow.Controllers
 
             route.MapGet("/ListAll", ([FromServices]DAL<User> dal) =>
             {
-                var ArtistList = dal.ListAll();
-                if (ArtistList is null)
+                var userList = dal.ListAll();
+                if (userList is null)
                 {
                     return Results.NoContent();
                 }
 
-                var artistListResponse = EntityListToResponseList(ArtistList);
+                var userListResponse = EntityListToResponseList(userList);
 
-                return Results.Ok(ArtistList);
+                return Results.Ok(userListResponse);
             });
 
             route.MapPost("/Create", ([FromBody] UserRequest userRequest,[FromServices]DAL<User> dal) =>
@@ -33,6 +33,35 @@ namespace CarbonNow.Controllers
                 dal.Create(user);
 
                 return Results.Ok(user);
+            });
+
+            route.MapDelete("/Delete", ([FromServices] DAL<User> dal, int id) =>
+            {
+                var user = dal.RecuperarPor(a => a.Id == id);
+                if(user is null)
+                {
+                    return Results.NotFound();
+                }
+                dal.Delete(user);
+                return Results.Ok();
+            });
+
+            route.MapPut("/Update", ([FromBody] UserRequestEdit userEdit, [FromServices] DAL<User> dal) =>
+            {
+                var user = dal.RecuperarPor(a => a.Id == userEdit.id);
+                if (user is null)
+                {
+                    return Results.NotFound();
+                }
+
+                user.Nome = userEdit.name;
+                user.Email = userEdit.email;
+
+                dal.Update(user);
+
+                var userListResponse = EntityToResponse(user);
+
+                return Results.Ok(userListResponse);
             });
         }
 

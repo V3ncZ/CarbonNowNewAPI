@@ -35,5 +35,10 @@ namespace CarbonNow.Services
             _context.SaveChanges();
         }
 
+        public T? RecuperarPor(Func<T, bool> condicao)
+        {
+            return _context.Set<T>().FirstOrDefault(condicao);
+        }
+
     }
 }
