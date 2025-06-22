@@ -1,5 +1,6 @@
 ﻿using CarbonNow.Model;
 using CarbonNow.Request;
+using CarbonNow.Response;
 using CarbonNow.Services;
 using Microsoft.AspNetCore.Mvc;
 
@@ -68,6 +69,22 @@ namespace CarbonNow.Routes
 
                 return Results.Ok(electricalItem);
             });
+        }
+
+        private static ICollection<ElectricalItemResponse> EntityListToResponseList(IEnumerable<ElectricalItem> electricalItem)
+        {
+            return electricalItem.Select(a => )
+        }
+
+        private static ElectricalItemResponse EntityToResponse(ElectricalItem electricalItem)
+        {
+            return new TransportResponse(
+                electricalItem.Id,
+                electricalItem.IdUsuario,
+                electricalItem.NomeItem,
+                electricalItem.ConsumoKwh,
+                electricalItem.DtUso,
+                electricalItem.EmissaoCalculada)
         }
     }
 }

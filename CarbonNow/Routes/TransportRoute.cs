@@ -1,5 +1,6 @@
 ﻿using CarbonNow.Model;
 using CarbonNow.Request;
+using CarbonNow.Response;
 using CarbonNow.Services;
 using Microsoft.AspNetCore.Mvc;
 
@@ -19,8 +20,10 @@ namespace CarbonNow.Routes
                     return Results.NoContent();
                 }
 
-                return Results.Ok(transports);
-             });
+                var transportResponseList = EntityListToResponseList(transports);
+
+                return Results.Ok(transportResponseList);
+            });
 
             route.MapPost("/Create", ([FromBody] TransportRequest transportRequest, [FromServices] DAL<Transport> dal) =>
             {
@@ -34,7 +37,9 @@ namespace CarbonNow.Routes
 
                 dal.Create(transport);
 
-                return Results.Ok(transport);
+                var transportResponse = EntityToResponse(transport);
+
+                return Results.Ok(transportResponse);
             });
 
             route.MapDelete("/Delete/{id}", ([FromServices] DAL<Transport> dal, [FromRoute] int id) =>
@@ -53,7 +58,7 @@ namespace CarbonNow.Routes
             route.MapPut("/Update/{id}", ([FromBody] TransportRequest transportRequest, [FromServices] DAL<Transport> dal, [FromRoute] int id) =>
             {
                 var transportToUpdate = dal.RecuperarPor(a => a.Id == id);
-                if(transportToUpdate is null)
+                if (transportToUpdate is null)
                 {
                     return Results.NotFound();
                 }
@@ -69,9 +74,26 @@ namespace CarbonNow.Routes
 
                 dal.Update(transportToUpdate);
 
-                return Results.Ok(transportToUpdate);
+                var transportResponse = EntityToResponse(transportToUpdate);
+
+                return Results.Ok(transportResponse);
 
             });
         }
+        private static ICollection<TransportResponse> EntityListToResponseList(IEnumerable<Transport> TransportList)
+            {
+                return TransportList.Select(a => EntityToResponse(a)).ToList();
+            }
+        private static TransportResponse EntityToResponse(Transport transport)
+            {
+                return new TransportResponse(
+                    transport.Id,
+                    transport.IdUsuario,
+                    transport.TipoTransporte,
+                    transport.DistanciaKm,
+                    transport.DtUso,
+                    transport.EmissaoCalculada,
+                    transport.ConformeIso);
+            }
     }
 }

@@ -32,7 +32,9 @@ namespace CarbonNow.Routes
                 var user = new User(userRequest.nome, userRequest.email, userRequest.dtCadastro);
                 dal.Create(user);
 
-                return Results.Ok(user);
+                var userResponse = EntityToResponse(user);
+
+                return Results.Ok(userResponse);
             });
 
             route.MapDelete("/Delete/{id}", ([FromServices] DAL<User> dal, [FromRoute] int id) =>
