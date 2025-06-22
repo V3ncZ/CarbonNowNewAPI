@@ -37,7 +37,7 @@ namespace CarbonNow.Routes
                 return Results.Ok(transport);
             });
 
-            route.MapDelete("/Delete/{id}", ([FromServices] DAL<Transport> dal, int id) =>
+            route.MapDelete("/Delete/{id}", ([FromServices] DAL<Transport> dal, [FromRoute] int id) =>
             {
                 var transport = dal.RecuperarPor(a => a.Id == id);
                 if (transport is null)
@@ -50,7 +50,7 @@ namespace CarbonNow.Routes
                 return Results.NoContent();
             });
 
-            route.MapPut("/Update/{id}", ([FromBody] TransportRequest transportRequest, [FromServices] DAL<Transport> dal, int id) =>
+            route.MapPut("/Update/{id}", ([FromBody] TransportRequest transportRequest, [FromServices] DAL<Transport> dal, [FromRoute] int id) =>
             {
                 var transportToUpdate = dal.RecuperarPor(a => a.Id == id);
                 if(transportToUpdate is null)

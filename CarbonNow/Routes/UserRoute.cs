@@ -35,7 +35,7 @@ namespace CarbonNow.Routes
                 return Results.Ok(user);
             });
 
-            route.MapDelete("/Delete/{id}", ([FromServices] DAL<User> dal, int id) =>
+            route.MapDelete("/Delete/{id}", ([FromServices] DAL<User> dal, [FromRoute] int id) =>
             {
                 var user = dal.RecuperarPor(a => a.Id == id);
                 if(user is null)
@@ -46,7 +46,7 @@ namespace CarbonNow.Routes
                 return Results.Ok();
             });
 
-            route.MapPut("/Update/{id}", ([FromBody] UserRequestEdit userEdit, [FromServices] DAL<User> dal, int id) =>
+            route.MapPut("/Update/{id}", ([FromBody] UserRequest userEdit, [FromServices] DAL<User> dal, [FromRoute] int id) =>
             {
                 var user = dal.RecuperarPor(a => a.Id == id);
                 if (user is null)
@@ -54,7 +54,7 @@ namespace CarbonNow.Routes
                     return Results.NotFound();
                 }
 
-                user.Nome = userEdit.name;
+                user.Nome = userEdit.nome;
                 user.Email = userEdit.email;
 
                 dal.Update(user);
