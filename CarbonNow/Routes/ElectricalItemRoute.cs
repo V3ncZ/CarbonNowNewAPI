@@ -10,7 +10,7 @@ namespace CarbonNow.Routes
     {
         public static void ElectricalItemRoutes(this WebApplication app)
         {
-            var route = app.MapGroup("ElectricalItem");
+            var route = app.MapGroup("ElectricalItem").WithTags("ElectricalItem");
 
             route.MapGet("/ListAll", ([FromServices] DAL<ElectricalItem> dal) =>
             {
@@ -20,7 +20,9 @@ namespace CarbonNow.Routes
                     return Results.NoContent();
                 }
 
-                return Results.Ok(electricalItems);
+                var electricalItemResponseList = EntityListToResponseList(electricalItems);
+
+                return Results.Ok(electricalItemResponseList);
             });
 
             route.MapPost("/Create", ([FromBody] ElectricalItemRequest electricalItemRequest, [FromServices] DAL<ElectricalItem> dal) =>
@@ -34,7 +36,9 @@ namespace CarbonNow.Routes
 
                 dal.Create(electrialItem);
 
-                return Results.Ok(electrialItem);
+                var electrialItemResponse = EntityToResponse(electrialItem);
+
+                return Results.Ok(electrialItemResponse);
             });
 
             route.MapDelete("/Delete/{id}", ([FromServices] DAL<ElectricalItem> dal, [FromRoute] int id) =>
@@ -67,24 +71,26 @@ namespace CarbonNow.Routes
 
                 dal.Update(electricalItem);
 
-                return Results.Ok(electricalItem);
+                var electricalItemResponse = EntityToResponse(electricalItem);
+
+                return Results.Ok(electricalItemResponse);
             });
         }
 
         private static ICollection<ElectricalItemResponse> EntityListToResponseList(IEnumerable<ElectricalItem> electricalItem)
         {
-            return electricalItem.Select(a => )
+            return electricalItem.Select(a => EntityToResponse(a)).ToList();
         }
 
         private static ElectricalItemResponse EntityToResponse(ElectricalItem electricalItem)
         {
-            return new TransportResponse(
+            return new ElectricalItemResponse(
                 electricalItem.Id,
                 electricalItem.IdUsuario,
                 electricalItem.NomeItem,
                 electricalItem.ConsumoKwh,
                 electricalItem.DtUso,
-                electricalItem.EmissaoCalculada)
+                electricalItem.EmissaoCalculada);
         }
     }
 }

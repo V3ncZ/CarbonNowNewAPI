@@ -10,7 +10,7 @@ namespace CarbonNow.Routes
     {
         public static void TransportRoutes(this WebApplication app)
         {
-            var route = app.MapGroup("Transport");
+            var route = app.MapGroup("Transport").WithTags("Transport");
 
             route.MapGet("/ListAll", ([FromServices] DAL<Transport> dal) =>
             {

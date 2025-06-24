@@ -12,7 +12,7 @@ namespace CarbonNow.Routes
        public static void UserRoutes(this WebApplication app)
         {
 
-            var route = app.MapGroup("User");
+            var route = app.MapGroup("User").WithTags("User");
 
             route.MapGet("/ListAll", ([FromServices]DAL<User> dal) =>
             {

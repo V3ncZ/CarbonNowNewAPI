@@ -1,4 +1,5 @@
-﻿namespace CarbonNow.Model
+﻿
+namespace CarbonNow.Model
 {
     public class User
     {

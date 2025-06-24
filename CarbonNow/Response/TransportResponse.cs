@@ -4,12 +4,11 @@ namespace CarbonNow.Response
 {
     public class TransportResponse(
         int id, 
-        User idUsuario,
-        string tipoTransporte,
-        int distanciaKm,
+        decimal distanciaKm,
         DateTime dtUso,
-        int emissaoCalculada,
-        bool conformeIso)
+        decimal emissaoCalculada,
+        
+        TransportTypeResponse transportTypeResponse)
     {
     }
 }

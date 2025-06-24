@@ -4,10 +4,9 @@ namespace CarbonNow.Request
 {
     public record ElectricalItemRequest(
         User id,
-        string nomeItem,
-        int consumoKw,
-        DateTime dtUso,
-        int emissaoCalculada)
+        int tipoItemEletricoId,
+        decimal duracaoUsoHoras,
+        DateTime dtUso)
     {
     }
 }

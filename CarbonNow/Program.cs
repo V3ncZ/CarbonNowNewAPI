@@ -24,6 +24,7 @@ var app = builder.Build();
 
 app.UserRoutes();
 app.TransportRoutes();
+app.ElectricalItemRoutes();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
