@@ -19,12 +19,17 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<DAL<User>>();
 builder.Services.AddScoped<DAL<Transport>>();
 builder.Services.AddScoped<DAL<ElectricalItem>>();
+builder.Services.AddScoped<DAL<TransportType>>();
+builder.Services.AddScoped<DAL<ElectricalItemType>>();
 
 var app = builder.Build();
 
 app.UserRoutes();
 app.TransportRoutes();
+app.TransportTypeRoutes();
 app.ElectricalItemRoutes();
+app.ElectricalItemTypeRoutes();
+
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
