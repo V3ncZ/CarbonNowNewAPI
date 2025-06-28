@@ -29,10 +29,9 @@ namespace CarbonNow.Routes
             {
                 var electrialItem = new ElectricalItem(
                     electricalItemRequest.id,
-                    electricalItemRequest.nomeItem,
-                    electricalItemRequest.consumoKw,
-                    electricalItemRequest.dtUso,
-                    electricalItemRequest.emissaoCalculada);
+                    electricalItemRequest.tipoItemEletricoId,
+                    electricalItemRequest.duracaoUsoHoras,
+                    electricalItemRequest.dtUso);
 
                 dal.Create(electrialItem);
 
@@ -64,10 +63,9 @@ namespace CarbonNow.Routes
 
             electricalItem = new ElectricalItem(
                 electricalItemRequest.id,
-                electricalItemRequest.nomeItem,
-                electricalItemRequest.consumoKw,
-                electricalItemRequest.dtUso,
-                electricalItemRequest.emissaoCalculada);
+                electricalItemRequest.tipoItemEletricoId,
+                electricalItemRequest.duracaoUsoHoras,
+                electricalItemRequest.dtUso);
 
                 dal.Update(electricalItem);
 
@@ -87,10 +85,9 @@ namespace CarbonNow.Routes
             return new ElectricalItemResponse(
                 electricalItem.Id,
                 electricalItem.IdUsuario,
-                electricalItem.NomeItem,
-                electricalItem.ConsumoKwh,
                 electricalItem.DtUso,
-                electricalItem.EmissaoCalculada);
+                electricalItem.EmissaoCalculada,
+                electricalItem.DuracaoUsoHoras);
         }
     }
 }

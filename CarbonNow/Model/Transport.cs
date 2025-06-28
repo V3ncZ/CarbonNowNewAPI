@@ -12,6 +12,14 @@ namespace CarbonNow.Model
             EmissaoCalculada = emissaoCalculada;
         }
 
+        public Transport(User idUsuario, int tipoTransporteId, decimal distanciaKm, DateTime dtUso, decimal emissaoCalculada)
+        {
+            IdUsuario = idUsuario;
+            DistanciaKm = distanciaKm;
+            DtUso = dtUso;
+            EmissaoCalculada = emissaoCalculada;
+        }
+
         public int Id { get; set; }
         public User IdUsuario { get; set; }
         public TransportType TipoTransporte { get; set; }

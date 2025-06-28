@@ -8,6 +8,11 @@ namespace CarbonNow.Model
             
         }
 
+        public ElectricalItem(User id, int tipoItemEletricoId, decimal duracaoUsoHoras, DateTime dtUso)
+        {
+            DuracaoUsoHoras = duracaoUsoHoras;
+            DtUso = dtUso;
+        }
 
         public int Id { get; set; }
         public User? IdUsuario { get; set; }

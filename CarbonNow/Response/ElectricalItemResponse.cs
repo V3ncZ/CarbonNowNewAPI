@@ -7,11 +7,18 @@ namespace CarbonNow.Response
         int consumoKw,
         DateTime dtUso,
         decimal emissaoCalculada,
-        decimal emissaoUsoHoras,
-        
+        decimal duracaoUsoHoras,
+
         ElectricalItemTypeResponse electricalItemTypeResponse
-        
+
         )
     {
+        public ElectricalItemResponse(int id, User? idUsuario, DateTime dtUso, decimal emissaoCalculada, decimal duracaoUsoHoras)
+        {
+            this.id = id;
+            this.dtUso = dtUso;
+            this.emissaoCalculada = emissaoCalculada;
+            this.duracaoUsoHoras = duracaoUsoHoras;
+        }
     }
 }
