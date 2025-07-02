@@ -83,7 +83,6 @@ namespace CarbonNow.Routes
             return new TransportTypeResponse(
                 transportType.Id,
                 transportType.Nome,
-                transportType.EmissaoFatorPorKm,
                 transportType.ConformeIso);
         }
 

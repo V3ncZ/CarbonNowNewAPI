@@ -84,10 +84,14 @@ namespace CarbonNow.Routes
         {
             return new ElectricalItemResponse(
                 electricalItem.Id,
-                electricalItem.IdUsuario,
+                electricalItem.IdUsuario.Id,
                 electricalItem.DtUso,
                 electricalItem.EmissaoCalculada,
-                electricalItem.DuracaoUsoHoras);
+                electricalItem.DuracaoUsoHoras,
+                new ElectricalItemTypeResponse(
+                    electricalItem.TipoItemEletrico.Id,
+                    electricalItem.TipoItemEletrico.Nome,
+                    electricalItem.TipoItemEletrico.ConsumoKwhPorHora));
         }
     }
 }

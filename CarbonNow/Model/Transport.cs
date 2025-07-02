@@ -3,18 +3,14 @@ namespace CarbonNow.Model
 {
     public class Transport
     {
-        public Transport(User idUsuario, TransportType TipoTransporte, decimal distanciaKm, DateTime dtUso, decimal emissaoCalculada)
-        {
-            IdUsuario = idUsuario;
-            TipoTransporte = TipoTransporte;
-            DistanciaKm = distanciaKm;
-            DtUso = dtUso;
-            EmissaoCalculada = emissaoCalculada;
-        }
 
-        public Transport(User idUsuario, int tipoTransporteId, decimal distanciaKm, DateTime dtUso, decimal emissaoCalculada)
+        public Transport() { }
+
+
+        public Transport(User idUsuario, TransportType tipoTransporteId, decimal distanciaKm, DateTime dtUso, decimal emissaoCalculada)
         {
             IdUsuario = idUsuario;
+            TipoTransporte = tipoTransporteId;
             DistanciaKm = distanciaKm;
             DtUso = dtUso;
             EmissaoCalculada = emissaoCalculada;

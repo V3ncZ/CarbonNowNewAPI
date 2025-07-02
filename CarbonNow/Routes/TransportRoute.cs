@@ -29,11 +29,10 @@ namespace CarbonNow.Routes
             {
                 var transport = new Transport(
                     transportRequest.idUsuario,
-                    transportRequest.tipoTransporte,
+                    transportRequest.tipoTransporteId,
                     transportRequest.distanciaKm,
                     transportRequest.dtUso,
-                    transportRequest.emissaoCalculada,
-                    transportRequest.conformeIso);
+                    transportRequest.emissaoCalculada);
 
                 dal.Create(transport);
 
@@ -65,12 +64,10 @@ namespace CarbonNow.Routes
 
                 transportToUpdate = new Transport(
                     transportRequest.idUsuario,
-                    transportRequest.tipoTransporte,
+                    transportRequest.tipoTransporteId,
                     transportRequest.distanciaKm,
                     transportRequest.dtUso,
-                    transportRequest.emissaoCalculada,
-                    transportRequest.conformeIso
-                    );
+                    transportRequest.emissaoCalculada);
 
                 dal.Update(transportToUpdate);
 
@@ -86,14 +83,15 @@ namespace CarbonNow.Routes
             }
         private static TransportResponse EntityToResponse(Transport transport)
             {
-                return new TransportResponse(
-                    transport.Id,
-                    transport.IdUsuario,
-                    transport.TipoTransporte,
-                    transport.DistanciaKm,
-                    transport.DtUso,
-                    transport.EmissaoCalculada,
-                    transport.ConformeIso);
+            return new TransportResponse(
+                transport.Id,
+                transport.DistanciaKm,
+                transport.DtUso,
+                transport.EmissaoCalculada,
+                new TransportTypeResponse(
+                    transport.TipoTransporte.Id,
+                    transport.TipoTransporte.Nome,
+                    transport.TipoTransporte.ConformeIso));
             }
     }
 }
