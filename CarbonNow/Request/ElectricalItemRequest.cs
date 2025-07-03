@@ -3,7 +3,7 @@
 namespace CarbonNow.Request
 {
     public record ElectricalItemRequest(
-        User id,
+        int idUsuario,
         int tipoItemEletricoId,
         decimal duracaoUsoHoras,
         DateTime dtUso)

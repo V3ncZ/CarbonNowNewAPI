@@ -1,4 +1,5 @@
 ﻿using CarbonNow.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace CarbonNow.Services
 {
@@ -12,9 +13,17 @@ namespace CarbonNow.Services
             _context = context;
         }
 
-        public IEnumerable<T> ListAll()
+        public IEnumerable<T> ListAll(string[]? includes = null)
         {
-            return _context.Set<T>().ToList();
+            IQueryable<T> query = _context.Set<T>();
+            if (includes != null)
+            {
+                foreach (var include in includes)
+                {
+                    query = query.Include(include);
+                }
+            }
+            return query.ToList();
         }
 
         public void Create(T objeto)
@@ -35,9 +44,24 @@ namespace CarbonNow.Services
             _context.SaveChanges();
         }
 
-        public T? RecuperarPor(Func<T, bool> condicao)
+        public T? RecuperarPor(Func<T, bool> condicao, string[]? includes = null)
         {
-            return _context.Set<T>().FirstOrDefault(condicao);
+
+            IQueryable<T> query = _context.Set<T>();
+
+            if (includes != null)
+            {
+                // ...percorre cada string (ex: "TipoTransporte", "Usuario")...
+                foreach (var include in includes)
+                {
+                    // ...e adiciona o .Include() à query do Entity Framework.
+                    query = query.Include(include);
+                }
+            }
+
+            // Executa a query final com os includes e a condição.
+            return query.FirstOrDefault(condicao);
+
         }
 
     }

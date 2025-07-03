@@ -4,6 +4,7 @@ using CarbonNow.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CarbonNow.Migrations
 {
     [DbContext(typeof(CarbonNowDbContext))]
-    partial class CarbonNowDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250703005555_AdjustmentsOnTheModelClasses")]
+    partial class AdjustmentsOnTheModelClasses
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -94,6 +97,9 @@ namespace CarbonNow.Migrations
                     b.Property<int>("IdUsuario")
                         .HasColumnType("int");
 
+                    b.Property<int>("TipoTransportId")
+                        .HasColumnType("int");
+
                     b.Property<int>("TipoTransporteId")
                         .HasColumnType("int");
 
@@ -101,7 +107,7 @@ namespace CarbonNow.Migrations
 
                     b.HasIndex("IdUsuario");
 
-                    b.HasIndex("TipoTransporteId");
+                    b.HasIndex("TipoTransportId");
 
                     b.ToTable("Transports");
                 });
@@ -180,7 +186,7 @@ namespace CarbonNow.Migrations
 
                     b.HasOne("CarbonNow.Model.TransportType", "TipoTransporte")
                         .WithMany()
-                        .HasForeignKey("TipoTransporteId")
+                        .HasForeignKey("TipoTransportId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

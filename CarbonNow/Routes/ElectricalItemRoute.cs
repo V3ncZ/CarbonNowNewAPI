@@ -14,7 +14,7 @@ namespace CarbonNow.Routes
 
             route.MapGet("/ListAll", ([FromServices] DAL<ElectricalItem> dal) =>
             {
-                var electricalItems = dal.ListAll();
+                var electricalItems = dal.ListAll(includes: new[] {"TipoItemEletrico", "Usuario"});
                 if (electricalItems is null)
                 {
                     return Results.NoContent();
@@ -28,12 +28,14 @@ namespace CarbonNow.Routes
             route.MapPost("/Create", ([FromBody] ElectricalItemRequest electricalItemRequest, [FromServices] DAL<ElectricalItem> dal) =>
             {
                 var electrialItem = new ElectricalItem(
-                    electricalItemRequest.id,
+                    electricalItemRequest.idUsuario,
                     electricalItemRequest.tipoItemEletricoId,
                     electricalItemRequest.duracaoUsoHoras,
                     electricalItemRequest.dtUso);
 
                 dal.Create(electrialItem);
+
+                var electricalItemComplete = dal.RecuperarPor(a => a.Id == electrialItem.Id, includes: new[] { "TipoItemEletrico", "Usuario" });
 
                 var electrialItemResponse = EntityToResponse(electrialItem);
 
@@ -62,7 +64,7 @@ namespace CarbonNow.Routes
             }
 
             electricalItem = new ElectricalItem(
-                electricalItemRequest.id,
+                electricalItemRequest.idUsuario,
                 electricalItemRequest.tipoItemEletricoId,
                 electricalItemRequest.duracaoUsoHoras,
                 electricalItemRequest.dtUso);
@@ -84,7 +86,7 @@ namespace CarbonNow.Routes
         {
             return new ElectricalItemResponse(
                 electricalItem.Id,
-                electricalItem.IdUsuario.Id,
+                electricalItem.IdUsuario,
                 electricalItem.DtUso,
                 electricalItem.EmissaoCalculada,
                 electricalItem.DuracaoUsoHoras,

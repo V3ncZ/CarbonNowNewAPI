@@ -61,7 +61,7 @@ namespace CarbonNow.Routes
                 }
 
                 transportType = new TransportType(
-                    transportTypeRequest.id,
+                    id,
                     transportTypeRequest.nome,
                     transportTypeRequest.emissaoFatorPorKm);
 

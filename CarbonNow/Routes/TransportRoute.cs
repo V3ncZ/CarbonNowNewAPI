@@ -14,7 +14,7 @@ namespace CarbonNow.Routes
 
             route.MapGet("/ListAll", ([FromServices] DAL<Transport> dal) =>
             {
-                var transports = dal.ListAll();
+                var transports = dal.ListAll(includes: new[] {"TipoTransporte", "Usuario"});
                 if (transports is null)
                 {
                     return Results.NoContent();
@@ -35,6 +35,8 @@ namespace CarbonNow.Routes
                     transportRequest.emissaoCalculada);
 
                 dal.Create(transport);
+
+                var completeTransport = dal.RecuperarPor(a => a.Id == transport.Id, includes: new[] { "TipoTransporte", "Usuario" });
 
                 var transportResponse = EntityToResponse(transport);
 

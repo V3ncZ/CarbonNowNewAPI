@@ -3,8 +3,8 @@
 namespace CarbonNow.Request
 {
     public record TransportRequest(
-        User idUsuario,
-        TransportType tipoTransporteId,
+        int idUsuario,
+        int tipoTransporteId,
         decimal distanciaKm,
         DateTime dtUso,
         decimal emissaoCalculada)

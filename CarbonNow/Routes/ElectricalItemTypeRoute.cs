@@ -60,7 +60,7 @@ namespace CarbonNow.Routes
                 }
 
                 electricalItemType = new ElectricalItemType(
-                    electricalItemRequest.id,
+                    id,
                     electricalItemRequest.nome,
                     electricalItemRequest.consumo);
 
