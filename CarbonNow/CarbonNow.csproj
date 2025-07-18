@@ -24,4 +24,8 @@
     <Folder Include="Exceptions\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Include="..\CarbonNow.Web\Layout\Component.razor" Link="Component.razor" />
+  </ItemGroup>
+
 </Project>
