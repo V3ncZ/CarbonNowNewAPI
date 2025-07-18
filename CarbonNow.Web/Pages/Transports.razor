@@ -1,6 +1,27 @@
-﻿@page "/transports"
+﻿@page "/Transport/ListAll"
+@inject TransportAPI transportAPI
 <h3>Transports</h3>
 
-@code {
+@if (transportes is not null)
+{
+	foreach(var transporte in transportes)
+	{
+		<p>@transporte</p>
+	}
+}
 
+@code {
+	private ICollection<TransportResponse>? transportes;
+
+	protected override async Task OnInitializedAsync()
+	{
+		try
+		{
+			transportes = await transportAPI.GetTransportAsync();
+		}
+		catch (Exception ex)
+		{
+			Console.WriteLine($"Erro ao carregar transportes: {ex.Message}");
+		}
+	}
 }

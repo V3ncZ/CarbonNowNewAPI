@@ -22,6 +22,17 @@ builder.Services.AddScoped<DAL<ElectricalItem>>();
 builder.Services.AddScoped<DAL<TransportType>>();
 builder.Services.AddScoped<DAL<ElectricalItemType>>();
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAll", policy =>
+    {
+        policy.WithOrigins("https://localhost:7204") // URL do Blazor
+              .AllowAnyHeader()
+              .AllowAnyOrigin()
+              .AllowAnyMethod();
+    });
+});
+
 var app = builder.Build();
 
 app.UserRoutes();
@@ -29,6 +40,7 @@ app.TransportRoutes();
 app.TransportTypeRoutes();
 app.ElectricalItemRoutes();
 app.ElectricalItemTypeRoutes();
+app.UseCors("AllowAll");
 
 
 // Configure the HTTP request pipeline.
