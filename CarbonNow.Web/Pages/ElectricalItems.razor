@@ -1,6 +1,27 @@
 ﻿@page "/electricalItems"
+@inject ElectricalItemAPI electricalItemAPI
 <h3>ElectricalItems</h3>
 
-@code {
+@if (electricalItem is not null)
+{
+	foreach(var item in electricalItem)
+	{
+		<p>@item.tipoItemEletrico</p>
+	}
+}
 
+@code {
+	private ICollection<ElectricalItemResponse>? electricalItem;
+
+	protected override async Task OnInitializedAsync()
+	{
+		try
+		{
+			electricalItem = await electricalItemAPI.GetElectricalItemAsync();
+		}
+		catch(Exception ex)
+		{
+			Console.WriteLine($"Erro ao carregar os itens eletricos: {ex.Message}");
+		}
+	}
 }

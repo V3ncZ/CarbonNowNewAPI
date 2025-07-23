@@ -1,16 +1,28 @@
 ﻿@page "/Transport/ListAll"
 @inject TransportAPI transportAPI
-<h3>Transports</h3>
 
-@if (transportes is not null)
-{
-	foreach(var transporte in transportes)
-	{
-		<p>@transporte</p>
-	}
-}
+<MudDataGrid Items="@transportes" Filterable="true" FilterMode="@_filterMode" FilterCaseSensitivity="@_caseSensitivity">
+	<Columns>
+		<PropertyColumn Property="transporte => transporte.id" Title="Id do Transporte" Filterable="false" />
+		<PropertyColumn Property="transporte => transporte.transportTypeResponse.id" Title="Id do Tipo" Filterable="false" />
+		<PropertyColumn Property="transporte => transporte.transportTypeResponse.nome" Title="Nome" />
+		<PropertyColumn Property="transporte => transporte.dtUso" Title="Data de Uso" />
+		<PropertyColumn Property="transporte => transporte.distanciaKm" Title="Distância Kmh" />
+		<PropertyColumn Property="transporte => transporte.emissaoCalculada" Title="Emissão calculada" />
+		<PropertyColumn Property="transporte => transporte.transportTypeResponse.conformeIso" Title="Conforme ISO" />
+	</Columns>
+	<PagerContent>
+		<MudDataGridPager T="TransportResponse" />
+	</PagerContent>
+</MudDataGrid>
 
 @code {
+
+	IEnumerable<TransportResponse> transports = new List<TransportResponse>();
+
+	DataGridFilterMode _filterMode = DataGridFilterMode.Simple;
+	DataGridFilterCaseSensitivity _caseSensitivity = DataGridFilterCaseSensitivity.Default;
+
 	private ICollection<TransportResponse>? transportes;
 
 	protected override async Task OnInitializedAsync()
