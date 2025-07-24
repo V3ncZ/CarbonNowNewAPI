@@ -1,20 +1,24 @@
 ﻿@page "/Transport/ListAll"
 @inject TransportAPI transportAPI
 
-<MudDataGrid Items="@transportes" Filterable="true" FilterMode="@_filterMode" FilterCaseSensitivity="@_caseSensitivity">
-	<Columns>
-		<PropertyColumn Property="transporte => transporte.id" Title="Id do Transporte" Filterable="false" />
-		<PropertyColumn Property="transporte => transporte.transportTypeResponse.id" Title="Id do Tipo" Filterable="false" />
-		<PropertyColumn Property="transporte => transporte.transportTypeResponse.nome" Title="Nome" />
-		<PropertyColumn Property="transporte => transporte.dtUso" Title="Data de Uso" />
-		<PropertyColumn Property="transporte => transporte.distanciaKm" Title="Distância Kmh" />
-		<PropertyColumn Property="transporte => transporte.emissaoCalculada" Title="Emissão calculada" />
-		<PropertyColumn Property="transporte => transporte.transportTypeResponse.conformeIso" Title="Conforme ISO" />
-	</Columns>
-	<PagerContent>
-		<MudDataGridPager T="TransportResponse" />
-	</PagerContent>
-</MudDataGrid>
+<MudContainer MaxWidth="MaxWidth.False" Class="mt-6 px-6">
+	<MudPaper Class="pa-4">
+		<MudDataGrid Items="@transportes" Filterable="true" FilterMode="@_filterMode" FilterCaseSensitivity="@_caseSensitivity" Class="w-100">
+			<Columns>
+				<PropertyColumn Property="transporte => transporte.id" Title="Id do Transporte" Filterable="false" />
+				<PropertyColumn Property="transporte => transporte.transportTypeResponse.id" Title="Id do Tipo" Filterable="false" />
+				<PropertyColumn Property="transporte => transporte.transportTypeResponse.nome" Title="Nome" />
+				<PropertyColumn Property="transporte => transporte.dtUso" Title="Data de Uso" />
+				<PropertyColumn Property="transporte => transporte.distanciaKm" Title="Distância Kmh" />
+				<PropertyColumn Property="transporte => transporte.emissaoCalculada" Title="Emissão calculada" />
+				<PropertyColumn Property="transporte => transporte.transportTypeResponse.conformeIso" Title="Conforme ISO" />
+			</Columns>
+			<PagerContent>
+				<MudDataGridPager T="TransportResponse" />
+			</PagerContent>
+		</MudDataGrid>
+	</MudPaper>
+</MudContainer>
 
 @code {
 

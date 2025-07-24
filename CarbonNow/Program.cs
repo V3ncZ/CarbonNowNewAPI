@@ -28,7 +28,6 @@ builder.Services.AddCors(options =>
     {
         policy.WithOrigins("https://localhost:7204") // URL do Blazor
               .AllowAnyHeader()
-              .AllowAnyOrigin()
               .AllowAnyMethod();
     });
 });
@@ -40,7 +39,7 @@ app.TransportRoutes();
 app.TransportTypeRoutes();
 app.ElectricalItemRoutes();
 app.ElectricalItemTypeRoutes();
-app.UseCors("AllowAll");
+app.UseCors("AllowBlazorClient");
 
 
 // Configure the HTTP request pipeline.

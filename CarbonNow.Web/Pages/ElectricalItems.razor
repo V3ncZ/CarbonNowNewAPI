@@ -1,16 +1,33 @@
-﻿@page "/electricalItems"
+﻿@page "/ElectricalItems/ListAll"
 @inject ElectricalItemAPI electricalItemAPI
-<h3>ElectricalItems</h3>
 
-@if (electricalItem is not null)
-{
-	foreach(var item in electricalItem)
-	{
-		<p>@item.tipoItemEletrico</p>
-	}
-}
+<MudContainer MaxWidth="MaxWidth.False" Class="mt-6 px-6">
+	<MudPaper Class="pa-4">
+		<MudDataGrid Items="@electricalItem" Filterable="true" FilterMode="@_filterMode" FilterCaseSensitivity="@_caseSensitivity" Class="w-100">
+			<Columns>
+				<PropertyColumn Property="electricalItem => electricalItem.id" Title="Id Item Eletrico" Filterable="false" />
+				<PropertyColumn Property="electricalItem => electricalItem.tipoItemEletrico.id" Title="Id do Tipo" Filterable="false" />
+				<PropertyColumn Property="electricalItem => electricalItem.tipoItemEletrico.nome" Title="Nome" />
+				<PropertyColumn Property="electricalItem => electricalItem.consumoKw" Title="Consumo Kw" />
+				<PropertyColumn Property="electricalItem => electricalItem.tipoItemEletrico.consumoKhwPorHora" Title="Consumo Kw hora" />
+				<PropertyColumn Property="electricalItem => electricalItem.duracaoUsoHoras" Title="Duracao de Uso" Filterable="false" />
+				<PropertyColumn Property="electricalItem => electricalItem.emissaoCalculada" Title="Emissao Calculada" />
+			</Columns>
+			<PagerContent>
+				<MudDataGridPager T="ElectricalItemResponse" />
+			</PagerContent>
+		</MudDataGrid>
+	</MudPaper>
+</MudContainer>
+
 
 @code {
+
+	IEnumerable<ElectricalItemResponse> electricalItemResponses = new List<ElectricalItemResponse>();
+
+	DataGridFilterMode _filterMode = DataGridFilterMode.Simple;
+	DataGridFilterCaseSensitivity _caseSensitivity = DataGridFilterCaseSensitivity.Default;
+
 	private ICollection<ElectricalItemResponse>? electricalItem;
 
 	protected override async Task OnInitializedAsync()
