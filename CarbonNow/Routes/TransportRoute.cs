@@ -25,20 +25,26 @@ namespace CarbonNow.Routes
                 return Results.Ok(transportResponseList);
             });
 
-            route.MapPost("/Create", ([FromBody] TransportRequest transportRequest, [FromServices] DAL<Transport> dal) =>
+            route.MapPost("/Create", ([FromBody] TransportRequest transportRequest, [FromServices] DAL<Transport> dal, [FromServices] CarbonCalculatorService calculator, [FromServices] DAL<TransportType> tipoTransporteDal) =>
             {
+
+                var tipoTransporte = tipoTransporteDal.RecuperarPor(t => t.Id == transportRequest.tipoTransporteId);
+
+                decimal emissao = calculator.CalcularEmissaoDeCarbono(tipoTransporte.EmissaoFatorPorKm, transportRequest.distanciaKm);
+
+
                 var transport = new Transport(
                     transportRequest.idUsuario,
                     transportRequest.tipoTransporteId,
                     transportRequest.distanciaKm,
                     transportRequest.dtUso,
-                    transportRequest.emissaoCalculada);
+                    emissao);
 
                 dal.Create(transport);
 
                 var completeTransport = dal.RecuperarPor(a => a.Id == transport.Id, includes: new[] { "TipoTransporte", "Usuario" });
 
-                var transportResponse = EntityToResponse(transport);
+                var transportResponse = EntityToResponse(completeTransport);
 
                 return Results.Ok(transportResponse);
             });
@@ -56,7 +62,7 @@ namespace CarbonNow.Routes
                 return Results.NoContent();
             });
 
-            route.MapPut("/Update/{id}", ([FromBody] TransportRequest transportRequest, [FromServices] DAL<Transport> dal, [FromRoute] int id) =>
+            route.MapPut("/Update/{id}", ([FromBody] TransportRequest transportRequest, [FromServices] DAL<Transport> dal, [FromRoute] int id, [FromServices] CarbonCalculatorService calculator, [FromServices] DAL<TransportType> tipoTransporteDal) =>
             {
                 var transportToUpdate = dal.RecuperarPor(a => a.Id == id);
                 if (transportToUpdate is null)
@@ -64,16 +70,21 @@ namespace CarbonNow.Routes
                     return Results.NotFound();
                 }
 
-                transportToUpdate = new Transport(
-                    transportRequest.idUsuario,
-                    transportRequest.tipoTransporteId,
-                    transportRequest.distanciaKm,
-                    transportRequest.dtUso,
-                    transportRequest.emissaoCalculada);
+                var tipoTransporte = tipoTransporteDal.RecuperarPor(t => t.Id == transportRequest.tipoTransporteId);
+
+                decimal emissao = calculator.CalcularEmissaoDeCarbono(tipoTransporte.EmissaoFatorPorKm, transportRequest.distanciaKm);
+
+                transportToUpdate.IdUsuario = transportRequest.idUsuario;
+                transportToUpdate.TipoTransporteId = transportRequest.tipoTransporteId;
+                transportToUpdate.DistanciaKm = transportRequest.distanciaKm;
+                transportToUpdate.DtUso = transportRequest.dtUso;
+                transportToUpdate.EmissaoCalculada = emissao;
 
                 dal.Update(transportToUpdate);
 
-                var transportResponse = EntityToResponse(transportToUpdate);
+                var completeTransport = dal.RecuperarPor(a => a.Id == id, includes: new[] { "TipoTransporte", "Usuario" });
+
+                var transportResponse = EntityToResponse(completeTransport);
 
                 return Results.Ok(transportResponse);
 
@@ -93,6 +104,7 @@ namespace CarbonNow.Routes
                 new TransportTypeResponse(
                     transport.TipoTransporte.Id,
                     transport.TipoTransporte.Nome,
+                    transport.TipoTransporte.EmissaoFatorPorKm,
                     transport.TipoTransporte.ConformeIso));
             }
     }

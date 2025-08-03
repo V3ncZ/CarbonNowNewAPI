@@ -21,6 +21,7 @@ builder.Services.AddScoped<DAL<Transport>>();
 builder.Services.AddScoped<DAL<ElectricalItem>>();
 builder.Services.AddScoped<DAL<TransportType>>();
 builder.Services.AddScoped<DAL<ElectricalItemType>>();
+builder.Services.AddScoped<CarbonCalculatorService>();
 
 builder.Services.AddCors(options =>
 {

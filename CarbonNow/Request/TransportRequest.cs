@@ -6,8 +6,7 @@ namespace CarbonNow.Request
         int idUsuario,
         int tipoTransporteId,
         decimal distanciaKm,
-        DateTime dtUso,
-        decimal emissaoCalculada)
+        DateTime dtUso)
     {
     }
 }
